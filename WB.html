@@ -18,6 +18,10 @@
   			<li><a data-toggle="tab" id="tabID" href="#todo">All <span class="glyphicon glyphicon-fire"></span></a></li>
   			<li><a data-toggle="tab" href="#busquedaId">Search ID </a></li>
   			<li><a data-toggle="tab" href="#busquedaAutor">Search Author</a></li>
+  			<li><a data-toggle="tab" href="#busquedaTitulo">Search Title</a></li>
+  			<li><a data-toggle="tab" href="#busquedaAnio">Search Year</a></li>
+  			<li><a data-toggle="tab" href="#busquedaISBN">Search ISBN</a></li>
+  			<li><a data-toggle="tab" href="#busquedaURL">Search URL</a></li>
 		</ul>
 		<!-- Tabs area -->
 
@@ -47,9 +51,60 @@
                 			</span>
             		</div>
   				</div>
-  				<div id="resultadosAutor"></div>
-  			</div>
-		</div>
+  					<div id="resultadosAutor"></div>
+  				</div>
+
+  				<div id="busquedaTitulo" class="tab-pane fade">
+    			<div class="col-lg-4 col-lg-offset-4">
+    				<div class="input-group" buscar>
+            			<input type="text" class="form-control" id="query2" placeholder="Ingrese la búsqueda...">
+                			<span class="input-group-btn">
+                    			<button id="botonTitulo" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                			</span>
+            		</div>
+  				</div>
+  					<div id="resultadosTitulo"></div>
+  				</div>
+
+  				<div id="busquedaAnio" class="tab-pane fade">
+    			<div class="col-lg-4 col-lg-offset-4">
+    				<div class="input-group" buscar>
+            			<input type="text" class="form-control" id="query3" placeholder="Ingrese la búsqueda...">
+                			<span class="input-group-btn">
+                    			<button id="botonAnio" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                			</span>
+            		</div>
+  				</div>
+  					<div id="resultadosAnio"></div>
+  				</div>
+
+  				<div id="busquedaISBN" class="tab-pane fade">
+    			<div class="col-lg-4 col-lg-offset-4">
+    				<div class="input-group" buscar>
+            			<input type="text" class="form-control" id="query4" placeholder="Ingrese la búsqueda...">
+                			<span class="input-group-btn">
+                    			<button id="botonISBN" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                			</span>
+            		</div>
+  				</div>
+  					<div id="resultadosISBN"></div>
+  				</div>
+
+  				<div id="busquedaURL" class="tab-pane fade">
+    			<div class="col-lg-4 col-lg-offset-4">
+    				<div class="input-group" buscar>
+            			<input type="text" class="form-control" id="query5" placeholder="Ingrese la búsqueda...">
+                			<span class="input-group-btn">
+                    			<button id="botonURL" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                			</span>
+            		</div>
+  				</div>
+  					<div id="resultadosURL"></div>
+  				</div>
+
+			</div> <!-- div final -->
+
+			
 
 		<script>
 
@@ -57,6 +112,9 @@
   			$('#resultadoTodo').empty();
   			$('#resultadosID').empty();
   			$('#resultadosAutor').empty();
+  			$('#resultadosTitulo').empty()
+  			$('#resultadosAnio').empty()
+  			$('#resultadosISBN').empty()
 		});
 
 		$('#tabID').on('click',function(e){
@@ -126,6 +184,88 @@
 						});
 				});	
 			});
+
+		$('#botonTitulo').on('click',function(on_search){
+			$('#resultadosTitulo').empty();
+			var query = $('#query2').val();
+        	if (query.length == 0) {
+            	return;
+        	}
+    		var url = 'http://localhost/api/get/titulo='+query+'/';
+    		$.getJSON(url,function(data){
+    			$(data.docs).each(function(index,value){
+    							$('#resultadosTitulo').append($('<br><br>'));
+								$('#resultadosTitulo').append($('<div>' + "ID: " + value.id +'</div>'));
+            					$('#resultadosTitulo').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            					$('#resultadosTitulo').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            					$('#resultadosTitulo').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            					$('#resultadosTitulo').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            					$('#resultadosTitulo').append($('<p>' + " "+value.ISBN + '</p>'));
+						});
+				});	
+			});
+
+		$('#botonAnio').on('click',function(on_search){
+			$('#resultadosAnio').empty();
+			var query = $('#query3').val();
+        	if (query.length == 0) {
+            	return;
+        	}
+    		var url = 'http://localhost/api/get/anio='+query+'/';
+    		$.getJSON(url,function(data){
+    			$(data.docs).each(function(index,value){
+    							$('#resultadosAnio').append($('<br><br>'));
+								$('#resultadosAnio').append($('<div>' + "ID: " + value.id +'</div>'));
+            					$('#resultadosAnio').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            					$('#resultadosAnio').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            					$('#resultadosAnio').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            					$('#resultadosAnio').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            					$('#resultadosAnio').append($('<p>' + " "+value.ISBN + '</p>'));
+						});
+				});	
+			});
+
+		$('#botonISBN').on('click',function(on_search){
+			$('#resultadosISBN').empty();
+			var query = $('#query4').val();
+        	if (query.length == 0) {
+            	return;
+        	}
+    		var url = 'http://localhost/api/get/isbn='+query+'/';
+    		$.getJSON(url,function(data){
+    			$(data.docs).each(function(index,value){
+    							$('#resultadosISBN').append($('<br><br>'));
+								$('#resultadosISBN').append($('<div>' + "ID: " + value.id +'</div>'));
+            					$('#resultadosISBN').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            					$('#resultadosISBN').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            					$('#resultadosISBN').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            					$('#resultadosISBN').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            					$('#resultadosISBN').append($('<p>' + " "+value.ISBN + '</p>'));
+						});
+				});	
+			});
+
+		$('#botonURL').on('click',function(on_search){
+			$('#resultadosURL').empty();
+			var query = $('#query5').val();
+        	if (query.length == 0) {
+            	return;
+        	}
+    		var url = 'http://localhost/api/get/url='+query+'/';
+    		$.getJSON(url,function(data){
+    			$(data.docs).each(function(index,value){
+    							$('#resultadosURL').append($('<br><br>'));
+								$('#resultadosURL').append($('<div>' + "ID: " + value.id +'</div>'));
+            					$('#resultadosURL').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            					$('#resultadosURL').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            					$('#resultadosURL').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            					$('#resultadosURL').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            					$('#resultadosURL').append($('<p>' + " "+value.ISBN + '</p>'));
+						});
+				});	
+			});
+			
+			
 			
       
 </script>
