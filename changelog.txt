@@ -8,3 +8,6 @@ Ver 1.1:
 	- Actualizacion en la tab All. Ahora, funciona al clickearla, y no vuelve a hacer la peticion, a menos que se borren los datos.
 
 	//Evalue la posibilidad de usar iFrame en Autor, pero muchos resultados repercuten en el rendimiento.
+
+Ver 1.2:
+	- Se agregaron las busquedas faltantes.
