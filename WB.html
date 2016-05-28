@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">﻿
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  		<img src="/img/ajax-loader.gif" id="loading-indicator" style="display:none"/>
+  		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>Webbot</title>
+	</head>
+
+	<body>
+
+		<!-- Tabs area -->
+		<ul id="myTab" class="nav nav-tabs">
+  			<li><a data-toggle="tab" id="tabID" href="#todo">All <span class="glyphicon glyphicon-fire"></span></a></li>
+  			<li><a data-toggle="tab" href="#busquedaId">Search ID </a></li>
+  			<li><a data-toggle="tab" href="#busquedaAutor">Search Author</a></li>
+		</ul>
+		<!-- Tabs area -->
+
+		<div id="myTabContent" class="tab-content">
+  			<div id="todo" class="tab-pane fade">
+  				<div id="resultadoTodo"></div>
+  			</div>
+
+  			<div id="busquedaId" class="tab-pane fade">
+    			<div class="col-lg-4 col-lg-offset-4">
+    				<div class="input-group" buscar>
+            			<input type="text" class="form-control" id="query" placeholder="Ingrese la búsqueda...">
+                			<span class="input-group-btn">
+                    			<button id="botonId" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                			</span>
+            		</div>
+  				</div>
+  				<div id="resultadosID"></div>
+  			</div>
+  			
+  			<div id="busquedaAutor" class="tab-pane fade">
+    			<div class="col-lg-4 col-lg-offset-4">
+    				<div class="input-group" buscar>
+            			<input type="text" class="form-control" id="query1" placeholder="Ingrese la búsqueda...">
+                			<span class="input-group-btn">
+                    			<button id="botonAutor" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                			</span>
+            		</div>
+  				</div>
+  				<div id="resultadosAutor"></div>
+  			</div>
+		</div>
+
+		<script>
+
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) { //Cuando cambio de Tab..
+  			$('#resultadoTodo').empty();
+  			$('#resultadosID').empty();
+  			$('#resultadosAutor').empty();
+		});
+
+		$('#tabID').on('click',function(e){
+			if( $('#resultadoTodo').is(':empty') ){ //Chequeo si ya cargue los datos //
+				var url = 'http://localhost/api/get/list/'
+				$("#loading-indicator").show();
+				$.getJSON(url,function(data){
+					$(data.docs).each(function(index,value){
+								$('#resultadoTodo').append($('<br><br>'));
+								$('#resultadoTodo').append($('<div>' + "ID: " + value.id +'</div>'));
+            					$('#resultadoTodo').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            					$('#resultadoTodo').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            					$('#resultadoTodo').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            					$('#resultadoTodo').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            					$('#resultadoTodo').append($('<p>' + " "+value.ISBN + '</p>'));
+					});
+				$("#loading-indicator").hide();  
+				});
+			}
+			//$('#resultadoTodo').empty()
+		});
+
+		$('#botonId').on('click',function(on_search){
+		var query = $('#query').val();
+        if (query.length == 0) {
+            return;
+        }
+    	var url = 'http://localhost/api/get/id='+query+'/';
+    	$.getJSON(url,function(data){
+    		$(data.docs).each(function(index,value){
+    						$('#resultadosID').empty();
+    						$('#resultadosID').append($('<br><br>'));
+							$('#resultadosID').append($('<div>' + "ID: " + value.id +'</div>'));
+            				$('#resultadosID').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            				$('#resultadosID').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            				$('#resultadosID').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            				//$('#todo').append($('<iframe src="'+value.url+'">'+'</iframe>'));
+            				$('<iframe/>'); //Creo el elemento "iframe"...
+                    		$('<iframe/>', {
+                        			name: 'frame1',
+                        			id: 'frame1',
+                        			src: value.URL
+                    		}).appendTo('#resultadosID');
+            				$('#resultadosID').append($('<p>' + " "+value.ISBN + '</p>'));
+					});
+			});	
+		});
+
+
+		$('#botonAutor').on('click',function(on_search){
+			$('#resultadosAutor').empty();
+			var query = $('#query1').val();
+        	if (query.length == 0) {
+            	return;
+        	}
+    		var url = 'http://localhost/api/get/autor='+query+'/';
+    		$.getJSON(url,function(data){
+    			$(data.docs).each(function(index,value){
+    						
+    							$('#resultadosAutor').append($('<br><br>'));
+								$('#resultadosAutor').append($('<div>' + "ID: " + value.id +'</div>'));
+            					$('#resultadosAutor').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            					$('#resultadosAutor').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            					$('#resultadosAutor').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            					$('#resultadosAutor').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            					$('#resultadosAutor').append($('<p>' + " "+value.ISBN + '</p>'));
+						});
+				});	
+			});
+			
+      
+</script>
+</body>
+
+
+
+
+</html>
