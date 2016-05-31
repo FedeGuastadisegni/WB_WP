@@ -12,7 +12,12 @@
 	</head>
 
 	<body>
-
+		<!-- Jumbotron Area -->
+		 <div class="jumbotron container" id="jt">
+  	     	<h1><em>Web Bot de Datos Bibliométricos</em></h1>
+          	<img src="img/unla.png" class="img-responsive" alt="Unla" width="150" height="150"> 
+          	<br/>
+         
 		<!-- Tabs area -->
 		<ul id="myTab" class="nav nav-tabs">
   			<li><a data-toggle="tab" id="tabID" href="#todo">All <span class="glyphicon glyphicon-fire"></span></a></li>
@@ -31,11 +36,12 @@
   			</div>
 
   			<div id="busquedaId" class="tab-pane fade">
+        <br><br>
     			<div class="col-lg-4 col-lg-offset-4">
     				<div class="input-group" buscar>
-            			<input type="text" class="form-control" id="query" placeholder="Ingrese la búsqueda...">
+            			<input type="text" class="form-control" id="query" placeholder="Ingrese el ID...">
                 			<span class="input-group-btn">
-                    			<button id="botonId" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                    			<button id="botonId" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></button>
                 			</span>
             		</div>
   				</div>
@@ -43,11 +49,12 @@
   			</div>
   			
   			<div id="busquedaAutor" class="tab-pane fade">
+        <br><br>
     			<div class="col-lg-4 col-lg-offset-4">
     				<div class="input-group" buscar>
-            			<input type="text" class="form-control" id="query1" placeholder="Ingrese la búsqueda...">
+            			<input type="text" class="form-control" id="query1" placeholder="Ingrese el Autor...">
                 			<span class="input-group-btn">
-                    			<button id="botonAutor" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                    			<button id="botonAutor" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></button>
                 			</span>
             		</div>
   				</div>
@@ -55,11 +62,12 @@
   				</div>
 
   				<div id="busquedaTitulo" class="tab-pane fade">
+          <br><br>
     			<div class="col-lg-4 col-lg-offset-4">
     				<div class="input-group" buscar>
-            			<input type="text" class="form-control" id="query2" placeholder="Ingrese la búsqueda...">
+            			<input type="text" class="form-control" id="query2" placeholder="Ingrese el Titulo...">
                 			<span class="input-group-btn">
-                    			<button id="botonTitulo" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                    			<button id="botonTitulo" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></button>
                 			</span>
             		</div>
   				</div>
@@ -67,11 +75,12 @@
   				</div>
 
   				<div id="busquedaAnio" class="tab-pane fade">
+          <br><br>
     			<div class="col-lg-4 col-lg-offset-4">
     				<div class="input-group" buscar>
-            			<input type="text" class="form-control" id="query3" placeholder="Ingrese la búsqueda...">
+            			<input type="text" class="form-control" id="query3" placeholder="Ingrese el Año...">
                 			<span class="input-group-btn">
-                    			<button id="botonAnio" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                    			<button id="botonAnio" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></button>
                 			</span>
             		</div>
   				</div>
@@ -79,11 +88,12 @@
   				</div>
 
   				<div id="busquedaISBN" class="tab-pane fade">
+          <br><br>
     			<div class="col-lg-4 col-lg-offset-4">
     				<div class="input-group" buscar>
-            			<input type="text" class="form-control" id="query4" placeholder="Ingrese la búsqueda...">
+            			<input type="text" class="form-control" id="query4" placeholder="Ingrese el ISBN...">
                 			<span class="input-group-btn">
-                    			<button id="botonISBN" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                    			<button id="botonISBN" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></button>
                 			</span>
             		</div>
   				</div>
@@ -91,11 +101,12 @@
   				</div>
 
   				<div id="busquedaURL" class="tab-pane fade">
+          <br><br>
     			<div class="col-lg-4 col-lg-offset-4">
     				<div class="input-group" buscar>
-            			<input type="text" class="form-control" id="query5" placeholder="Ingrese la búsqueda...">
+            			<input type="text" class="form-control" id="query5" placeholder="Ingrese la URL...">
                 			<span class="input-group-btn">
-                    			<button id="botonURL" type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></button>
+                    			<button id="botonURL" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></button>
                 			</span>
             		</div>
   				</div>
@@ -103,13 +114,15 @@
   				</div>
 
 			</div> <!-- div final -->
+      </div>
 
-			
+
+    		<!-- Para la proxima. Ver rendimiento. Deje los div por separado, ver si conviene tener uno solo, o varios como ahora. -->
 
 		<script>
 
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) { //Cuando cambio de Tab..
-  			$('#resultadoTodo').empty();
+  			//$('#resultadoTodo').empty();
   			$('#resultadosID').empty();
   			$('#resultadosAutor').empty();
   			$('#resultadosTitulo').empty()
@@ -120,7 +133,6 @@
 		$('#tabID').on('click',function(e){
 			if( $('#resultadoTodo').is(':empty') ){ //Chequeo si ya cargue los datos //
 				var url = 'http://localhost/api/get/list/'
-				$("#loading-indicator").show();
 				$.getJSON(url,function(data){
 					$(data.docs).each(function(index,value){
 								$('#resultadoTodo').append($('<br><br>'));
@@ -131,7 +143,6 @@
             					$('#resultadoTodo').append($('<div>' + "URL: "+ value.URL + '</div>'));
             					$('#resultadoTodo').append($('<p>' + " "+value.ISBN + '</p>'));
 					});
-				$("#loading-indicator").hide();  
 				});
 			}
 			//$('#resultadoTodo').empty()
@@ -147,12 +158,12 @@
     		$(data.docs).each(function(index,value){
     						$('#resultadosID').empty();
     						$('#resultadosID').append($('<br><br>'));
-							$('#resultadosID').append($('<div>' + "ID: " + value.id +'</div>'));
-            				$('#resultadosID').append($('<div>' + "Autor: " + value.Autor + '</div>'));
-            				$('#resultadosID').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
-            				$('#resultadosID').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+							  $('#resultadosID').append($('<div>' + "ID: " + value.id +'</div>'));
+            		$('#resultadosID').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            		$('#resultadosID').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            		$('#resultadosID').append($('<div>' + "Año: "+ value.Anio + '</div>'));
             				//$('#todo').append($('<iframe src="'+value.url+'">'+'</iframe>'));
-            				$('<iframe/>'); //Creo el elemento "iframe"...
+            		$('<iframe/>'); //Creo el elemento "iframe"...
                     		$('<iframe/>', {
                         			name: 'frame1',
                         			id: 'frame1',
@@ -269,6 +280,20 @@
 			
       
 </script>
+
+<footer class="color3">
+    <div class="footer">
+        <div class="col-sm-3 color3">
+            
+        </div>
+        <div class="col-sm-6 color3" align="center">
+             Proyecto de Software. De Domingo Gonzalo, Guastadisegni Federico, Rodriguez Nahuel.
+        </div>
+        <div class="col-sm-4 color3" align="center">
+           
+        </div>
+    </div>
+</footer>
 </body>
 
 
