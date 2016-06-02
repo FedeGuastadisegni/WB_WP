@@ -11,3 +11,12 @@ Ver 1.1:
 
 Ver 1.2:
 	- Se agregaron las busquedas faltantes.
+
+Ver 1.3:
+
+---
+
+Ver 1.4:
+
+	-Cambio inicial en la busqueda por ID, usando callback con deferred objects (mas eficiente, y es como hay que hacerlo en las versiones nuevas de Jquery.
+	

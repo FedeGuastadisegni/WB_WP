@@ -130,7 +130,6 @@
   			$('#resultadosISBN').empty()
 		});
 
-		
 
 		$('#tabID').on('click',function(e){
 			if( $('#resultadoTodo').is(':empty') ){ //Chequeo si ya cargue los datos //
@@ -139,42 +138,51 @@
 					$(data.docs).each(function(index,value){
 								$('#resultadoTodo').append($('<br><br>'));
 								$('#resultadoTodo').append($('<div>' + "ID: " + value.id +'</div>'));
-            					$('#resultadoTodo').append($('<div>' + "Autor: " + value.Autor + '</div>'));
-            					$('#resultadoTodo').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
-            					$('#resultadoTodo').append($('<div>' + "Año: "+ value.Anio + '</div>'));
-            					$('#resultadoTodo').append($('<div>' + "URL: "+ value.URL + '</div>'));
-            					$('#resultadoTodo').append($('<p>' + " "+value.ISBN + '</p>'));
+            		$('#resultadoTodo').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+            		$('#resultadoTodo').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+            		$('#resultadoTodo').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+            		$('#resultadoTodo').append($('<div>' + "URL: "+ value.URL + '</div>'));
+            		$('#resultadoTodo').append($('<p>' + " "+value.ISBN + '</p>'));
 					});
 				});
 			}
 			//$('#resultadoTodo').empty()
 		});
 
-		$('#botonId').on('click',function(on_search){
-		var query = $('#query').val();
-        if (query.length == 0) {
-            return;
-        }
-    	var url = 'http://localhost/api/get/id='+query+'/';
-    	$.getJSON(url,function(data){
-    		$(data.docs).each(function(index,value){
-    						$('#resultadosID').empty();
-    						$('#resultadosID').append($('<br><br>'));
-							  $('#resultadosID').append($('<div>' + "ID: " + value.id +'</div>'));
-            		$('#resultadosID').append($('<div>' + "Autor: " + value.Autor + '</div>'));
-            		$('#resultadosID').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
-            		$('#resultadosID').append($('<div>' + "Año: "+ value.Anio + '</div>'));
-            				//$('#todo').append($('<iframe src="'+value.url+'">'+'</iframe>'));
-            		$('<iframe/>'); //Creo el elemento "iframe"...
-                    		$('<iframe/>', {
-                        			name: 'frame1',
-                        			id: 'frame1',
-                        			src: value.URL
-                    		}).appendTo('#resultadosID');
-            				$('#resultadosID').append($('<p>' + " "+value.ISBN + '</p>'));
-					});
-			});	
+
+    //Evento -> click sobre el boton de busqueda en ID. Dispara el callback via deferred objects.
+		$('#botonId').on('click',function(on_search){ 
+      getDataID().done(parseDataID); //Importante -> con esto se hace el callback via deferred objects. Es mucho mas eficiente.
 		});
+
+    //Funcion para hacer la peticion de un ID.
+    function getDataID(){
+      return $.ajax({
+        url: 'http://localhost/api/get/id='+$('#query').val()+'/',
+        type: 'GET'
+      });
+    }
+    //Funcion para hacer el Parse del JSON que devuelve el ID. Lo hago por separado porque incluye el IFrame.
+    function parseDataID(data){
+      $(data.docs).each(function(index,value){
+                $('#resultadosID').empty();
+                $('#resultadosID').append($('<br><br>'));
+                $('#resultadosID').append($('<div>' + "ID: " + value.id +'</div>'));
+                $('#resultadosID').append($('<div>' + "Autor: " + value.Autor + '</div>'));
+                $('#resultadosID').append($('<div>' + "Titulo: " + value.Titulo + '</div>'));
+                $('#resultadosID').append($('<div>' + "Año: "+ value.Anio + '</div>'));
+                    //$('#todo').append($('<iframe src="'+value.url+'">'+'</iframe>'));
+                $('<iframe/>'); //Creo el elemento "iframe"...
+                        $('<iframe/>', {
+                              name: 'frame1',
+                              id: 'frame1',
+                              src: value.URL
+                        }).appendTo('#resultadosID');
+                    $('#resultadosID').append($('<p>' + " "+value.ISBN + '</p>'));
+          });
+    }
+
+    
 
 
 		$('#botonAutor').on('click',function(on_search){
