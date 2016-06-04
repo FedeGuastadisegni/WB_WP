@@ -1,13 +1,3 @@
-#loading-indicator {
-  			position: absolute;
-  			left: 50%;
-  			top: 50%;
-  			width: 64px;
-  			height: 64px;
-  			margin-left: -32px;
-  			margin-top: -32px;
-  			border: 0;
-}
 
 .col-centered{
     margin: 0 auto;
@@ -17,6 +7,7 @@
 #jt { 
     background-color: #91162e; /* Orange */
     color: #ffffff;
+    text-align: center;
 }
 .container {
     background-color: #F0F5F5;
